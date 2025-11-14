@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0D1663A12EBA1D4A0060797E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0D1663A02EBA1D4A0060797E /* FirebaseFirestore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		0D1663802EB9DAEF0060797E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D1663A12EBA1D4A0060797E /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 				0D1663722EB9DAED0060797E /* LivePolls */,
 				0D1663822EB9DAEF0060797E /* LivePollsTests */,
 				0D16638C2EB9DAEF0060797E /* LivePollsUITests */,
+				0D16639F2EBA1D4A0060797E /* Frameworks */,
 				0D1663712EB9DAED0060797E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +96,13 @@
 				0D1663892EB9DAEF0060797E /* LivePollsUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		0D16639F2EBA1D4A0060797E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +125,7 @@
 			);
 			name = LivePolls;
 			packageProductDependencies = (
+				0D1663A02EBA1D4A0060797E /* FirebaseFirestore */,
 			);
 			productName = LivePolls;
 			productReference = 0D1663702EB9DAED0060797E /* LivePolls.app */;
@@ -195,6 +209,9 @@
 			);
 			mainGroup = 0D1663672EB9DAED0060797E;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0D16639E2EB9E6320060797E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0D1663712EB9DAED0060797E /* Products */;
 			projectDirPath = "";
@@ -395,6 +412,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A5Y588G4YX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -426,6 +444,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A5Y588G4YX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -570,6 +589,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0D16639E2EB9E6320060797E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0D1663A02EBA1D4A0060797E /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0D16639E2EB9E6320060797E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0D1663682EB9DAED0060797E /* Project object */;
 }
