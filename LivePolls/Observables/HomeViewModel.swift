@@ -15,6 +15,20 @@ class HomeViewModel {
     let db = Firestore.firestore()
     var polls  =  [Poll]()
     
+    var error: String? =  nil
+    var newPollName: String? = ""
+    var newOptionName: String =  ""
+    var newPollOptions: [String] =  []
+     var isLoading =  false
+    var isCreateNewPollButtonDisabled: Bool {
+        isLoading || newPollName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || newPollOptions.count < 2
+    }
+    
+    var isAddOptionsButtonDiabled: Bool {
+        isLoading || newOptionName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || newPollOptions.count == 4
+        
+    }
+    
     @MainActor
     func listenToLivePolls() {
         db.collection("polls")
@@ -34,5 +48,27 @@ class HomeViewModel {
                     self.polls =  polls
                 }
             }
+    }
+    
+    @MainActor
+    func createNewPoll() async {
+        isLoading =  true
+        defer { isLoading = false}
+        let poll =  Poll(name: newPollName?.trimmingCharacters(in: .whitespacesAndNewlines), totalCount: 0 options: newPollOptions.map {Option(count: 0, name: $0)})
+        
+        do {
+            try db.document("polls/\(poll.id)").setData(from: poll)
+            self.newPollName = ""
+            self.newOptionName = ""
+            self.newPollOptions =  []
+        } catch {
+            self.error =  error.localizedDescription
+        }
+    }
+    
+    func addOption() {
+        self.newPollOptions.append(newOptionName.trimmingCharacters(in: .whitespacesAndNewlines)
+        )
+        self.newOptionName =  ""
     }
 }
