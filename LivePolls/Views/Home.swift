@@ -9,7 +9,8 @@ import SwiftUI
 
 struct Home: View {
     @Bindable var vm = HomeViewModel()
-    
+    @Environment(DeepLinkManager.self) private var deepLinkManager
+
     var body: some View {
         List {
             existingPollSection
@@ -18,7 +19,7 @@ struct Home: View {
             addOptionSection
         }
         .alert("Error", isPresented: .constant(vm.error != nil)) {
-            
+
         } message: {
             Text(vm.error ?? "an error occured")
         }
@@ -30,6 +31,12 @@ struct Home: View {
         .navigationTitle("My Live Polls")
         .onAppear{
             vm.listenToLivePolls()
+        }
+        .onChange(of: deepLinkManager.pendingPollId) { oldValue, newValue in
+            if let pollId = newValue {
+                vm.modalPollId = pollId
+                deepLinkManager.clearPendingPollId()
+            }
         }
     }
     

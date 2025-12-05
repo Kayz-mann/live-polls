@@ -29,10 +29,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct LivePollsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @State private var deepLinkManager = DeepLinkManager()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(deepLinkManager)
+                .onOpenURL { url in
+                    _ = deepLinkManager.handleURL(url)
+                }
         }
     }
 }
