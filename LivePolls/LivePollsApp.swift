@@ -36,3 +36,10 @@ struct LivePollsApp: App {
         }
     }
 }
+
+
+//vote creating a poll and inviting users to join  an existing poll by id
+//more features include, deep linking, live activities, real time data base, platform vison os, macos and watchOS compatible and Push Notification Service, Live Activity Widget
+//invite people to join poll using the poll id and deeplinking
+//every user activity should be logged
+

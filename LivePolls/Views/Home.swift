@@ -12,8 +12,20 @@ struct Home: View {
     
     var body: some View {
         List {
+            existingPollSection
             livePollsSection
-            createPollsSection
+            createPollSection
+            addOptionSection
+        }
+        .alert("Error", isPresented: .constant(vm.error != nil)) {
+            
+        } message: {
+            Text(vm.error ?? "an error occured")
+        }
+        .sheet(item: $vm.modalPollId) { id in
+            NavigationStack{
+                PollView(vm: .init(pollId: id))
+            }
         }
         .navigationTitle("My Live Polls")
         .onAppear{
@@ -24,20 +36,20 @@ struct Home: View {
     var livePollsSection: some View {
         Section {
             DisclosureGroup("Latest Live Polls") {
-                ForEach(vm.polls) { poll in
+                ForEach(vm.polls) { item in
                     VStack {
                         HStack(alignment: .top){
-                            Text(poll.name)
+                            Text(item.name)
                             Spacer()
                             Image(systemName: "chart.bar.xaxis")
-                            Text(String(poll.totalCount))
-                            if let updatedAt = poll.updatedAt {
+                            Text(String(item.totalCount))
+                            if let updatedAt = item.updatedAt {
                                 Image(systemName: "clock.fill")
                                 Text(updatedAt, style: .time)
                             }
                         }
-                        if poll.options.map(\.count).reduce(0, +) > 0 {
-                            PollChart(options: poll.options)
+                        if item.options.map(\.count).reduce(0, +) > 0 {
+                            PollChart(options: item.options)
                                 .frame(height: 160)
                         } else {
                             Text("No votes yet")
@@ -45,6 +57,24 @@ struct Home: View {
                                 .frame(maxWidth: .infinity, minHeight: 160, alignment: .center)
                         }
                     }
+                    .padding(.vertical)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        vm.modalPollId = item.id
+                    }
+                }
+            }
+        }
+    }
+    
+    var existingPollSection: some View {
+        Section {
+            DisclosureGroup("Join a Poll") {
+                TextField("Enter poll id", text: $vm.existingPollId)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
+                Button("Join") {
+                    Task { await vm.joinExistingPoll()}
                 }
             }
         }
@@ -81,7 +111,7 @@ struct Home: View {
             }.disabled(vm.isAddOptionsButtonDiabled)
             
             ForEach(vm.newPollOptions) { option in
-                Text($0)
+                Text(option)
             }.onDelete { indexSet in
                 vm.newPollOptions.remove(atOffsets: indexSet)
             }
