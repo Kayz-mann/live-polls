@@ -85,6 +85,7 @@
 			membershipExceptions = (
 				Models/Option.swift,
 				Models/Poll.swift,
+				Views/PollChart.swift,
 			);
 			target = 0DBCD7292EE2E9F8001FDF61 /* LivePollsWidgetExtension */;
 		};

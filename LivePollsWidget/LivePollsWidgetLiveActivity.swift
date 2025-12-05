@@ -16,36 +16,55 @@ struct LivePollsWidgetLiveActivity: Widget {
             // Lock screen/banner UI goes here
             VStack {
                 HStack {
+                    Text(context.state.name)
+                    Spacer()
+                    Image(systemName: "chart.bar.axis")
+                    Text(String(context.state.totalCount))
                     
+                    if let updatedAt =  context.state.updatedAt {
+                        Image(systemName: "clock.fill")
+                        Text(updatedAt, style: .time)
+                    }
                 }
+                .frame(maxWidth: .infinity)
+                .lineLimit(1)
+                .padding(.bottom)
+                
+                PollChart(options: context.state.options)
+                
             }
+            .padding()
+            .activitySystemActionForegroundColor(Color.black)
+            
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded UI
                 DynamicIslandExpandedRegion(.leading) {
-                    Text("\(context.state.totalCount)")
-                        .font(.title2).bold()
+                    Text(context.state.name).lineLimit(1)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    if let updated = context.state.updatedAt {
-                        Text(updated, style: .time)
-                            .font(.caption2)
-                    }
+                    HStack(alignment: .top) {
+                        Image(systemName: "chart.bar.xaxis")
+                        Text(String(context.state.totalCount))
+                    }.lineLimit(1)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Text(context.state.name)
-                        .font(.subheadline)
-                        .lineLimit(1)
+                    PollChart(options: context.state.options)
                 }
             } compactLeading: {
-                Text("\(min(context.state.totalCount, 99))")
+                Text(context.state.lastUpdatedOption?.name ?? "_")
             } compactTrailing: {
-                Text("🗳️")
+                HStack {
+                    Image(systemName: "chart.bar.xaxis")
+                    Text(String(context.state.lastUpdatedOption?.count ?? 0))
+                }.lineLimit(1)
             } minimal: {
-                Text("🗳️")
+                HStack {
+                    Image(systemName: "chart.bar.xaxis")
+                    Text(String(context.state.totalCount))
+                }.lineLimit(1)
             }
-            .widgetURL(URL(string: "http://www.apple.com"))
-            .keylineTint(Color.red)
+       
         }
     }
 }
